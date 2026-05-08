@@ -1,0 +1,30 @@
+{
+  "name": "wheres-finn-app",
+  "version": "1.0.0",
+  "description": "A \"Where's Waldo\" type game using React and Express",
+  "main": "index.js",
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goldenvertex42/wheres-finn-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/goldenvertex42/wheres-finn-app/issues"
+  },
+  "homepage": "https://github.com/goldenvertex42/wheres-finn-app#readme",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
