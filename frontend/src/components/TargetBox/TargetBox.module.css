@@ -1,0 +1,58 @@
+@keyframes diagonalPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.targetContainer {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: flex;
+}
+
+.reticle {
+  width: 75px;
+  height: 75px;
+  border: 4px dashed white;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px black, inset 0 0 0 2px black;
+  pointer-events: none;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  list-style: none;
+  min-width: 180px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  width: max-content;
+  padding: 8px 0;
+  animation: diagonalPop 0.2s ease-out forwards;
+  transform-origin: top left;
+}
+
+.dropdownItem {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-family: sans-serif;
+  color: #333;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+
