@@ -17,6 +17,10 @@
   line-height: 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   max-width: 100%;
+
+  --box-size: 100px;
+  --marker-size: 50px;
+  --border-thickness: 4px;
 }
 
 .imageContainer img {
@@ -25,4 +29,43 @@
   height: auto;
   cursor: crosshair;
   pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+  .imageContainer {
+    --box-size: 75px;
+    --marker-size: 35px;
+    --border-thickness: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .imageContainer {
+    --box-size: 50px;
+    --marker-size: 25px;
+    --border-thickness: 2px;
+  }
+}
+
+.confirmedMarker {
+  position: absolute;
+  width: var(--marker-size);
+  height: var(--marker-size);
+  border: var(--border-thickness) solid #28a745;
+  border-radius: 50%;
+  background-color: rgba(40, 167, 69, 0.2);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: markerPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes markerPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
 }
