@@ -1,0 +1,70 @@
+/* StartPage.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1; /* Fills the space between Header and Footer */
+  padding: 2rem;
+  text-align: center;
+  background-color: #f0f4f8; /* Soft background to make the UI pop */
+}
+
+.instructions {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.instructions p {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.instructions ul {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+}
+
+.instructions li {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #555;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Custom bullet points */
+.instructions li::before {
+  content: "📍";
+  margin-right: 10px;
+}
+
+.startBtn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.startBtn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.startBtn:active {
+  transform: scale(0.98);
+}
