@@ -13,7 +13,7 @@ export default function TargetBox({x, y, characters, onSelect, isNearRightEdge})
         <li 
           key={char.id} 
           className={styles.dropdownItem}
-          onClick={() => onSelect(char.name)}
+          onClick={() => onSelect(char.id, char.name)}
         >
           {char.name}
         </li>

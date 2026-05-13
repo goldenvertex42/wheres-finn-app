@@ -1,24 +1,25 @@
-// Hardcoded win-zones for testing (matches your measured % exactly)
-const TARGETS = {
-  'Finn': { relX: 67.72, relY: 69.54 },
-  'Jake': { relX: 25.83, relY: 74.51 },
-  'Princess Bubblegum': { relX: 91.28, relY: 72.74 },
-  'Lady Rainicorn': { relX: 5.94, relY: 9.15 },
-  'Marceline': { relX: 40.94, relY: 66.87 },
-  'Ice King': { relX: 17.06, relY: 72.56 },
-  'Lumpy Space Princess': { relX: 6.72, relY: 81.08 },
-  'Peppermint Butler': { relX: 85.28, relY: 86.23 },
-  'The Royal Tart Toter': { relX: 9.61, relY: 58.88 },
-  'Gunther': { relX: 24.28, relY: 63.50 },
-  'Poo-brained Horse': { relX: 29.06, relY: 61.55 },
-  'Starchy': { relX: 16.06, relY: 88.54 },
-  'Mr. Cupcake': { relX: 56.06, relY: 73.09 },
-  'Jiggler': { relX: 57.39, relY: 84.81 }
-};
+import { prisma } from "db";
+
+
 
 // In-memory session tracking for server-side timing
 // (We will replace this with a temp table or session store later)
 const activeSessions = new Map();
+
+export const getCharacters = async (req, res) => {
+  try {
+    const characters = await prisma.character.findMany({
+      select: {
+        id: true,
+        name: true
+      }
+    });
+    return res.status(200).json(characters);
+  } catch (error) {
+      console.error("Failed to fetch characters:", error);
+      return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export const startGame = (req, res) => {
   const sessionId = req.ip; // Simplest temporary session tracker using IP address
@@ -28,21 +29,79 @@ export const startGame = (req, res) => {
   return res.status(200).json({ message: "Game started successfully." });
 };
 
-export const validateClick = (req, res) => {
-  const { characterName, userX, userY } = req.body;
-  const target = TARGETS[characterName];
+export const validateClick = async (req, res) => {
+  try {
+    const { characterId, characterName, userX, userY } = req.body;
 
-  if (!target) {
-    return res.status(404).json({ hit: false, message: "Character not found." });
+    const target = await prisma.character.findUnique({
+      where: { id: Number(characterId) }
+    });
+
+    if (!target) {
+      return res.status(404).json({ hit: false, message: "Character not found." });
+    }
+
+    const margin = 3.0;
+    const isHit = Math.abs(userX - target.relX) <= margin && Math.abs(userY - target.relY) <= margin;
+
+    if (isHit) {
+      return res.status(200).json({ hit: true, message: `You found ${characterName}!` });
+    }
+
+    return res.status(200).json({ hit: false, message: "Keep looking!" });
+
+  } catch (error) {
+    console.error("Database validation error:", error);
+    return res.status(500).json({ hit: false, message: "Server error validating selection." });
   }
-
-  const margin = 3.0; 
-  const isHit = Math.abs(userX - target.relX) <= margin && 
-                Math.abs(userY - target.relY) <= margin;
-
-  if (isHit) {
-    return res.status(200).json({ hit: true, message: `You found ${characterName}!` });
-  }
-
-  return res.status(200).json({ hit: false, message: "Keep looking!" });
 };
+
+export const finishGame = async (req, res) => {
+  try {
+    const sessionId = req.ip;
+    const session = activeSessions.get(sessionId);
+
+    // Security Check: Ensure the user actually hit the /start endpoint first
+    if (!session || !session.startTime) {
+      return res.status(400).json({ 
+        success: false, 
+        message: "No active game session found. Did you start the game?" 
+      });
+    }
+
+    // Calculate precise server-side elapsed time
+    const endTime = Date.now();
+    const serverTimeMs = endTime - session.startTime;
+
+    // Clean up memory: Delete the session so it can't be reused/submitted twice
+    activeSessions.delete(sessionId);
+    console.log(`Game finished for session ${sessionId}. Total time: ${serverTimeMs}ms`);
+
+    // Fetch the current Top 10 leaderboard entries sorted by fastest time (ascending)
+    const topScores = await prisma.leaderboard.findMany({
+      orderBy: { timeMs: 'asc' },
+      take: 10
+    });
+
+    // Determine high-score eligibility (Qualifies if table has < 10 entries OR beats the 10th place time)
+    const qualifiesForLeaderboard = 
+      topScores.length < 10 || 
+      serverTimeMs < topScores[topScores.length - 1].timeMs;
+
+    // Return the verified duration and leaderboard qualification status to frontend
+    return res.status(200).json({
+      success: true,
+      message: "Game complete! Score verified.",
+      timeMs: serverTimeMs,
+      qualifies: qualifiesForLeaderboard
+    });
+
+  } catch (error) {
+    console.error("Error processing game finish:", error);
+    return res.status(500).json({ 
+      success: false, 
+      message: "Internal server error processing game completion." 
+    });
+  }
+};
+
