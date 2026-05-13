@@ -151,3 +151,9 @@ vite.config.ts.timestamp-*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Prisma generated artifacts
+**/db/src/generated/
+**/src/generated/
+/node_modules/
+.env
