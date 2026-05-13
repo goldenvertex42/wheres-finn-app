@@ -1,6 +1,6 @@
 import styles from './TargetBox.module.css'
 
-export default function TargetBox({x, y, characters, onSelect}) {
+export default function TargetBox({x, y, characters, onSelect, isNearRightEdge}) {
   return(
   <div 
     className={styles.targetContainer} 
@@ -8,7 +8,7 @@ export default function TargetBox({x, y, characters, onSelect}) {
     onClick={(e) => e.stopPropagation()}
   >
     <div className={styles.reticle}></div>
-    <ul className={styles.dropdown}>
+    <ul className={`${styles.dropdown} ${isNearRightEdge ? styles.dropdownLeft : ''}`}>
       {characters.map((char) => (
         <li 
           key={char.id} 
