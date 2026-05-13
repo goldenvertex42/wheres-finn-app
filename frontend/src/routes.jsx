@@ -1,7 +1,7 @@
 import App from "./App";
 import StartPage from "./pages/StartPage/StartPage";
 import GamePage from "./pages/GamePage/GamePage";
-import Leaderboard from "./pages/Leaderboard/Leaderboard";
+import LeaderboardPage from "./pages/LeaderboardPage/LeaderboardPage";
 import ErrorPage from "./pages/error-page";
 
 const routes = [
@@ -12,7 +12,7 @@ const routes = [
     children: [
       { index: true, element: <StartPage /> },
       { path: "game", element: <GamePage /> },
-      { path: "leaderboard", element: <Leaderboard /> },
+      { path: "leaderboard", element: <LeaderboardPage /> },
     ],
   },
 ];
