@@ -1,4 +1,4 @@
-import { prisma } from "db";
+import { prisma } from "../../../../db/src/index.js"; 
 
 // GET /api/leaderboard
 export const getLeaderboard = async (req, res) => {
