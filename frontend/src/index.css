@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
   --border-color: #dcdde1;     /* Subtle light grey separation lines */
   --text-primary: #2f3542;     /* High-contrast deep slate body text */
   --text-secondary: #747d8c;   /* Soft muted grey subtitle tags */
-  --accent-blue: #70a1ff;      /* Bright brand identification highlights */
+  --accent-blue: #2f74ff;      /* Bright brand identification highlights */
   --accent-success: #2ed573;   /* Energetic positive victory action buttons */
   
   /* Shared standard UI layout transitions */
@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
     --border-color: #57606f;   /* Medium dark outline separator rings */
     --text-primary: #ffffff;   /* Clean stark white primary text typography */
     --text-secondary: #a4b0be; /* Silver-grey secondary subtitle indicators */
-    --accent-blue: #1e90ff;    /* Deep vivid neon-blue interactive highlights */
+    --accent-blue: #52a3ff;    /* Deep vivid neon-blue interactive highlights */
     --accent-success: #28a745; /* Rich arcade emerald confirmation buttons */
   }
 }
@@ -91,4 +91,14 @@ body {
   color: var(--text-primary);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   transition: var(--theme-transition);
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  filter: brightness(1.2);
 }
