@@ -1,10 +1,10 @@
 .footer {
-  background-color: #333;
-  color: #fff;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
   padding: 1.5rem;
   text-align: center;
   font-size: 0.9rem;
-  border-top: 2px solid #444;
+  border-top: 2px solid var(--border-color);
   margin-top: auto;
 }
 
@@ -14,7 +14,7 @@
 }
 
 .footer a {
-  color: #00d2ff;
+  color: var(--accent-blue);
   text-decoration: none;
   margin-left: 0.25rem;
 }
