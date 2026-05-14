@@ -1,10 +1,22 @@
-@keyframes diagonalPop {
+@keyframes centeredPop {
   0% {
-    transform: scale(0);
+    transform: translateX(-50%) scale(0.9);
     opacity: 0;
   }
   100% {
-    transform: scale(1);
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Upward Floating Animation Preset */
+@keyframes centeredPopUp {
+  0% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
     opacity: 1;
   }
 }
@@ -14,72 +26,111 @@
   transform: translate(-50%, -50%);
   z-index: 10;
   display: flex;
+  flex-direction: column;
+  align-items: center; /* Forces child elements to align to the horizontal center */
 }
 
 .reticle {
   width: var(--box-size, 75px);
   height: var(--box-size, 75px);
-  border: var(--border-thickness, 4px) dashed white;
-  border-radius: 4px;
-  box-shadow: 0 0 0 2px black, inset 0 0 0 2px black;
+  border: var(--border-thickness, 4px) dashed var(--text-primary);
+  border-radius: 50%; /* Converted to perfect circle to frame faces naturally */
+  box-shadow: 0 0 0 2px var(--bg-primary), inset 0 0 0 2px var(--bg-primary);
   pointer-events: none;
+  transition: var(--theme-transition);
 }
 
+/* Centered Dropdown Alignment Panel */
 .dropdown {
   position: absolute;
-  top: 100%;
-  left: 100%;
-  background: white;
-  border: 1px solid #ccc;
+  /* Positions the list box directly below the circular target ring */
+  top: calc(100% + 8px); 
+  left: 50%;
+  /* Centers the list box horizontally relative to the click point */
+  transform: translateX(-50%); 
+  transform-origin: top center;
+  
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   list-style: none;
-  min-width: 180px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  min-width: 160px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   width: max-content;
-  padding: 8px 0;
-  animation: diagonalPop 0.2s ease-out forwards;
-  transform-origin: top left;
+  padding: 6px 0;
+  animation: centeredPop 0.15s ease-out forwards;
+  transition: var(--theme-transition);
 }
 
+/* Edge Boundary Fail-Safes */
+/* If clicking near the right edge, shift the menu flush to the right */
 .dropdown.dropdownLeft {
   left: auto;
-  right: 100%;
+  right: -20px;
+  transform: none;
   transform-origin: top right;
+  animation: diagonalPopRight 0.15s ease-out forwards;
+}
+
+/* If clicking near the left edge, shift the menu flush to the left */
+.dropdown.dropdownRight {
+  left: -20px;
+  right: auto;
+  transform: none;
+  transform-origin: top left;
+  animation: diagonalPopLeft 0.15s ease-out forwards;
+}
+
+/* FIX: Flips the layout menu to float safely ABOVE the reticle when clicking near the bottom */
+.dropdown.dropdownTop {
+  top: auto;
+  bottom: calc(100% + 8px); /* Anchors bottom edge relative to the top of the circle */
+  transform-origin: bottom center;
+  animation: centeredPopUp 0.15s ease-out forwards;
+}
+
+/* Dual Mismatches: Bottom-Right Edge Intersection Safety */
+.dropdown.dropdownTop.dropdownLeft {
+  left: auto;
+  right: -20px;
+  bottom: calc(100% + 8px);
+  transform: none;
+  transform-origin: bottom right;
+  animation: diagonalPopRight 0.15s ease-out forwards;
+}
+
+/* Dual Mismatches: Bottom-Left Edge Intersection Safety */
+.dropdown.dropdownTop.dropdownRight {
+  left: -20px;
+  right: auto;
+  bottom: calc(100% + 8px);
+  transform: none;
+  transform-origin: bottom left;
+  animation: diagonalPopLeft 0.15s ease-out forwards;
 }
 
 .dropdownItem {
-  padding: 10px 15px;
+  padding: 10px 16px;
   cursor: pointer;
-  font-family: sans-serif;
-  color: #333;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
   white-space: nowrap;
-  transition: background 0.2s;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s, color 0.15s;
 }
 
 .dropdownItem:hover {
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: var(--bg-primary);
+  color: var(--accent-blue);
 }
 
-@media (max-width: 768px) {
-  .dropdown {
-    min-width: 140px;
-    padding: 4px 0;
-  }
-  .dropdownItem {
-    padding: 8px 12px;
-    font-size: 0.875rem; /* Shrinks fonts slightly so they don't clip viewports */
-  }
+/* Boundary Animation Presets */
+@keyframes diagonalPopRight {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
-
-@media (max-width: 480px) {
-  .dropdown {
-    min-width: 110px;
-  }
-  .dropdownItem {
-    padding: 6px 10px;
-    font-size: 0.75rem; /* Keeps layout fully usable on narrow smartphones */
-  }
+@keyframes diagonalPopLeft {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
-
-
