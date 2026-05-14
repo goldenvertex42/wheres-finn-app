@@ -1,26 +1,3 @@
-@keyframes centeredPop {
-  0% {
-    transform: translateX(-50%) scale(0.9);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
-  }
-}
-
-/* Upward Floating Animation Preset */
-@keyframes centeredPopUp {
-  0% {
-    transform: translateX(-50%) scale(0.9);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(-50%) scale(1);
-    opacity: 1;
-  }
-}
-
 .targetContainer {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -126,6 +103,28 @@
 }
 
 /* Boundary Animation Presets */
+@keyframes centeredPop {
+  0% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes centeredPopUp {
+  0% {
+    transform: translateX(-50%) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
 @keyframes diagonalPopRight {
   0% { transform: scale(0.9); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
@@ -133,4 +132,22 @@
 @keyframes diagonalPopLeft {
   0% { transform: scale(0.9); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .dropdown.dropdownLeft {
+    right: 10px;
+  }
+
+  .dropdown.dropdownTop.dropdownLeft {
+    right: 10px;
+  }
+
+  .dropdown.dropdownRight {
+    left: 10px;
+  }
+
+  .dropdown.dropdownTop.dropdownRight {
+    left: 10px;
+  }
 }
