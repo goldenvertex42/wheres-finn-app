@@ -53,14 +53,6 @@
 }
 
 /* Viewport Adjustments for Small Screens */
-
-@media (max-width: 600px) {
-  .header {
-    /* Completely hides the global site navigation bar ONLY on the active game page path view layout */
-    display: none !important;
-  }
-}
-
 @media (max-width: 480px) {
   .header {
     padding: 0 20px;
