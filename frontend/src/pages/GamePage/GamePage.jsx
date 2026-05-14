@@ -21,7 +21,10 @@ export default function GamePage() {
     clearTargeting
   } = useGameSession(isImageLoaded);
 
+  const isInterfaceReady = isImageLoaded && remainingCharacters.length > 0;
+
   const handleImageClick = (e) => {
+    if (!isInterfaceReady) return;
     e.stopPropagation();
     const rect = e.target.getBoundingClientRect();
     const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
@@ -37,7 +40,7 @@ export default function GamePage() {
     <div className={styles.gameViewContainer} onClick={clearTargeting}>
       <div className={`${styles.imageContainer} ${isShaking ? styles.shakeContainer : ''}`}>
         {/* Render full-page loading spinner if image has not resolved yet */}
-        {!isImageLoaded && (
+        {!isInterfaceReady && (
           <div className={styles.mapLoadingOverlay}>
             <div className={styles.spinner} />
             <div className={styles.loadingText}>Downloading Game Scene...</div>
@@ -45,7 +48,9 @@ export default function GamePage() {
         )}
         
         {/* Floating Top Widget Bar Overlay */}
-        <GameHeader time={displayTime} remainingCount={remainingCharacters.length} />
+        {isInterfaceReady && (
+          <GameHeader time={displayTime} remainingCount={remainingCharacters.length} />
+        )}
 
         <img 
           src={adventureTimeImage} 
@@ -54,7 +59,7 @@ export default function GamePage() {
           onClick={remainingCharacters.length > 0 ? handleImageClick : undefined} 
         />
         
-        {isImageLoaded && markers.map((marker, index) => (
+        {isInterfaceReady && markers.map((marker, index) => (
           <div 
             key={`marker-${index}`} 
             className={styles.confirmedMarker} 
@@ -64,7 +69,7 @@ export default function GamePage() {
           </div>
         ))}
 
-        {isImageLoaded && misses.map((miss) => (
+        {isInterfaceReady && misses.map((miss) => (
           <div 
             key={miss.id} 
             className={styles.missMarker} 
@@ -74,7 +79,7 @@ export default function GamePage() {
           </div>
         ))}
 
-        {clickData && remainingCharacters.length > 0 && (
+        {isInterfaceReady && clickData && remainingCharacters.length > 0 && (
           <TargetBox 
             key={`${clickData.relX}-${clickData.relY}`} 
             x={clickData.relX} 
