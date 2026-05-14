@@ -1,92 +1,126 @@
-.container {
+.leaderboardContainer {
+  width: 100%;
+  min-height: calc(100vh - 70px); /* Adjusts height nicely to account for your 70px Header */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  flex: 1;
-  padding: 2rem 1rem;
-  background-color: #f8fafc;
+  padding: 60px 20px;
+  background-color: var(--bg-primary);
 }
 
-.promptCard, .feedbackCard, .boardCard {
-  background: white;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+.loader {
   width: 100%;
-  max-width: 500px;
-  margin-bottom: 1.5rem;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-blue);
+  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  background-color: var(--bg-primary); /* Swapped from #1e222b */
+  transition: var(--theme-transition);
+}
+
+.tableWrapper {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: var(--theme-transition);
+}
+
+.title {
+  margin: 0 0 24px 0;
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
   text-align: center;
+  letter-spacing: -0.5px;
+  transition: var(--theme-transition);
 }
 
-.promptCard h2 {
-  color: #1e293b;
-  margin-bottom: 0.5rem;
-}
-
-.form {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-.submitBtn {
-  background-color: #10b981;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.submitBtn:hover {
-  background-color: #059669;
-}
-
-.list {
-  list-style: none;
+.scoreList {
+  margin: 0;
   padding: 0;
-  margin: 1.5rem 0 0 0;
-}
-
-.listItem {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #f1f5f9;
-  font-family: monospace;
-  font-size: 1.1rem;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.listItem:last-child {
-  border-bottom: none;
+.scoreRow {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  border-left: 4px solid var(--border-color); /* Neutral default entry marker link */
+  transition: transform 0.15s ease, var(--theme-transition);
 }
+
+.scoreRow:hover {
+  transform: scale(1.01);
+}
+
+/* Style Highlight Treatments for Top 3 Medal Placements */
+.scoreList .scoreRow:nth-child(1) { border-left-color: #ffa502; } /* Gold */
+.scoreList .scoreRow:nth-child(2) { border-left-color: #a4b0be; } /* Silver */
+.scoreList .scoreRow:nth-child(3) { border-left-color: #ff7f50; } /* Bronze */
 
 .rank {
-  color: #64748b;
-  font-weight: bold;
-  width: 40px;
-  text-align: left;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #747d8c;
+  width: 50px;
 }
 
+.scoreList .scoreRow:nth-child(1) .rank { color: #ffa502; }
+.scoreList .scoreRow:nth-child(2) .rank { color: #a4b0be; }
+.scoreList .scoreRow:nth-child(3) .rank { color: #ff7f50; }
+
 .name {
-  flex: 1;
-  text-align: left;
-  color: #334155;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-grow: 1; /* Pushes time text smoothly to the right edge */
 }
 
 .time {
-  color: #0f172a;
-  font-weight: bold;
+  color: var(--accent-blue);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* Small Device Breakpoints */
+@media (max-width: 480px) {
+  .leaderboardContainer {
+    padding: 30px 16px;
+  }
+  
+  .tableWrapper {
+    padding: 20px 16px;
+  }
+  
+  .title {
+    font-size: 1.4rem;
+  }
+  
+  .scoreRow {
+    padding: 10px 14px;
+  }
+  
+  .name, .time {
+    font-size: 0.95rem;
+  }
 }
