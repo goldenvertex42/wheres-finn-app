@@ -49,6 +49,28 @@
   font-size: 1rem;
 }
 
+.themeToggleBtn {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, var(--theme-transition); 
+}
+
+.themeToggleBtn:hover {
+  filter: brightness(0.95);
+}
+
+.themeToggleBtn:active {
+  transform: scale(0.95);
+}
+
 @media (max-width: 600px) {
   .floatingTimerWidget {
     position: fixed;
