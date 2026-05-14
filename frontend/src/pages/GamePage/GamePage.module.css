@@ -1,50 +1,55 @@
-.gameViewContainer {
-  width: 100%;
-  min-height: 100vh;
-  box-sizing: border-box;
+.gameViewContainer { 
+  width: 100%; 
+  min-height: 100vh; 
+  box-sizing: border-box; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 40px 20px; 
+  background-color: var(--bg-primary); 
+  transition: var(--theme-transition); 
+  cursor: default; 
+} 
+
+.imageContainer { 
+  position: relative; 
+  display: inline-block; 
+  line-height: 0; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+  max-width: 100%; 
+  --box-size: 100px; 
+  --marker-size: 50px; 
+  --border-thickness: 4px; 
+} 
+
+.imageContainer img { 
+  display: block; 
+  width: 100%; 
+  height: auto; 
+  cursor: crosshair; 
+  pointer-events: auto; 
+}
+
+.missMarker {
+  position: absolute;
+  width: var(--marker-size);
+  height: var(--marker-size);
+  border: var(--border-thickness) solid #ff4757;
+  border-radius: 50%;
+  background-color: rgba(255, 71, 87, 0.25);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
-  background-color: var(--bg-primary);
-  transition: var(--theme-transition);
-  cursor: default;
-}
-
-.imageContainer {
-  position: relative;
-  display: inline-block;
-  line-height: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  max-width: 100%;
-  --box-size: 100px;
-  --marker-size: 50px;
-  --border-thickness: 4px;
-}
-
-.imageContainer img {
-  display: block;
-  width: 100%;
-  height: auto;
-  cursor: crosshair;
-  pointer-events: auto;
-}
-
-@media (max-width: 768px) {
-  .imageContainer {
-    --box-size: 75px;
-    --marker-size: 35px;
-    --border-thickness: 3px;
-  }
-}
-
-@media (max-width: 480px) {
-  .imageContainer {
-    --box-size: 50px;
-    --marker-size: 25px;
-    --border-thickness: 2px;
-  }
+  color: #ff4757;
+  font-family: system-ui, sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--marker-size) * 0.45);
+  
+  animation: missFlashAndFade 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
 .confirmedMarker {
@@ -57,29 +62,127 @@
   transform: translate(-50%, -50%);
   pointer-events: none;
   animation: markerPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  color: var(--accent-success);
+  font-family: system-ui, sans-serif;
+  font-weight: 900;
+  font-size: calc(var(--marker-size) * 0.55); 
 }
 
-@keyframes markerPop {
+
+.winMessage { 
+  margin-top: 20px; 
+  background-color: var(--accent-success); 
+  color: #ffffff; 
+  padding: 12px 30px; 
+  font-family: system-ui, sans-serif; 
+  font-weight: 700; 
+  font-size: 1.5rem; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  transition: var(--theme-transition); 
+}
+
+.mapLoadingOverlay { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  background-color: var(--bg-primary); 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 20px; 
+  z-index: 500; 
+  transition: opacity 0.4s ease, var(--theme-transition); 
+} 
+
+.spinner { 
+  width: 50px; 
+  height: 50px; 
+  border: 4px solid var(--border-color); 
+  border-top-color: var(--accent-blue); 
+  border-radius: 50%; 
+  animation: spinLoop 0.8s linear infinite; 
+} 
+
+.loadingText { 
+  color: var(--text-primary); 
+  font-family: system-ui, sans-serif; 
+  font-weight: 700; 
+  font-size: 1.2rem; 
+  letter-spacing: 0.5px; 
+}
+
+.shakeContainer {
+  animation: horizontalShake 0.35s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+@keyframes missFlashAndFade {
   0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
   }
-  100% {
+  15% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  30% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
+  100% {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+  }
 }
 
-/* Fallback centered win message panel */
-.winMessage {
-  margin-top: 20px;
-  background-color: var(--accent-success);
-  color: #ffffff;
-  padding: 12px 30px;
-  font-family: system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: var(--theme-transition);
+@keyframes horizontalShake {
+  10%, 90% { transform: translate3d(-3px, 0, 0); }
+  20%, 80% { transform: translate3d(5px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+@keyframes markerPop { 
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+} 
+
+@keyframes spinLoop { 
+  0% { transform: rotate(0deg); } 
+  100% { transform: rotate(360deg); } 
+}
+
+@keyframes markerPop { 
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+} 
+
+@keyframes spinLoop { 
+  0% { transform: rotate(0deg); } 
+  100% { transform: rotate(360deg); } 
+}
+
+@media (max-width: 768px) { 
+  .imageContainer { 
+    --box-size: 75px; 
+    --marker-size: 35px; 
+    --border-thickness: 3px; 
+  } 
+} 
+
+@media (max-width: 480px) { 
+  .imageContainer { 
+    --box-size: 50px; 
+    --marker-size: 25px; 
+    --border-thickness: 2px; 
+  } 
 }

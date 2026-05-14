@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router';
 
-export function useGameSession() {
+export function useGameSession(isImageLoaded) {
   const navigate = useNavigate();
   const [isGameActive, setIsGameActive] = useState(true);
   const [clickData, setClickData] = useState(null);
@@ -9,6 +9,9 @@ export function useGameSession() {
   const [markers, setMarkers] = useState([]);
   const [hasFetched, setHasFetched] = useState(false);
   const [displayTime, setDisplayTime] = useState("00:00");
+  const [misses, setMisses] = useState([]);
+  const [isShaking, setIsShaking] = useState(false);
+
 
   const startTimeRef = useRef(null);
   const animationFrameRef = useRef(null);
@@ -16,7 +19,6 @@ export function useGameSession() {
 
   // Initial target hydration
   useEffect(() => {
-    startTimeRef.current = Date.now();
     fetch(`${apiUrl}/api/game/characters`)
       .then(res => res.json())
       .then(data => {
@@ -35,7 +37,11 @@ export function useGameSession() {
 
   // High-performance visual stopwatch loop
   useEffect(() => {
-    if (!isGameActive || !hasFetched) return;
+    if (!isGameActive || !hasFetched || !isImageLoaded) return;
+
+    if (!startTimeRef.current) {
+      startTimeRef.current = Date.now();
+    }
 
     const updateTimer = () => {
       const elapsedMs = Date.now() - startTimeRef.current;
@@ -49,7 +55,7 @@ export function useGameSession() {
 
     animationFrameRef.current = requestAnimationFrame(updateTimer);
     return () => cancelAnimationFrame(animationFrameRef.current);
-  }, [isGameActive, hasFetched]);
+  }, [isGameActive, hasFetched, isImageLoaded]);
 
   // Win-State Evaluator
   useEffect(() => {
@@ -86,9 +92,24 @@ export function useGameSession() {
         setMarkers(prev => [...prev, { relX: clickData.relX, relY: clickData.relY }]);
         setRemainingCharacters(prev => prev.filter(char => char.id !== characterId));
       } else {
-        alert(data.message || "Missed! Try looking closer.");
-      }
-    } catch (error) {
+      // Create a unique temporary identifier for this specific miss element instance
+      const missId = Date.now();
+      
+      setMisses(prev => [...prev, { 
+        id: missId, 
+        relX: clickData.relX, 
+        relY: clickData.relY 
+      }]);
+
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 350);
+
+      // Automatically prune this specific miss node from state memory after 800ms
+      setTimeout(() => {
+        setMisses(prev => prev.filter(m => m.id !== missId));
+      }, 800);
+    }
+  } catch (error) {
       console.error("Failed to run click validation request:", error);
     }
     setClickData(null);
@@ -102,6 +123,8 @@ export function useGameSession() {
     setClickData,
     remainingCharacters,
     markers,
+    misses,
+    isShaking,
     displayTime,
     handleSelection,
     clearTargeting
