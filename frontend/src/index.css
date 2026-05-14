@@ -1,3 +1,7 @@
+/* ==========================================
+   1. GLOBAL RESET & BOX MODEL FIXES
+   ========================================== */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -39,4 +43,52 @@ h1, h2, h3, h4, h5, h6 {
 
 #root, #__next {
   isolation: isolate;
+}
+
+/* END OF RESET */
+
+/* ==========================================
+   2. GLOBAL DESIGN SYSTEM TOKENS (LIGHT SYSTEM DEFAULT)
+   ========================================== */
+
+:root {
+  --bg-primary: #f5f6fa;       /* Clean soft light theme canvas background */
+  --bg-surface: #ffffff;       /* Solid crisp white element cards */
+  --border-color: #dcdde1;     /* Subtle light grey separation lines */
+  --text-primary: #2f3542;     /* High-contrast deep slate body text */
+  --text-secondary: #747d8c;   /* Soft muted grey subtitle tags */
+  --accent-blue: #70a1ff;      /* Bright brand identification highlights */
+  --accent-success: #2ed573;   /* Energetic positive victory action buttons */
+  
+  /* Shared standard UI layout transitions */
+  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ==========================================
+   3. AUTOMATIC DARK THEME OVERRIDES
+   ========================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1e222b;     /* Deep slate dark mode canvas background */
+    --bg-surface: #2f3542;     /* Elevated charcoal element cards */
+    --border-color: #57606f;   /* Medium dark outline separator rings */
+    --text-primary: #ffffff;   /* Clean stark white primary text typography */
+    --text-secondary: #a4b0be; /* Silver-grey secondary subtitle indicators */
+    --accent-blue: #1e90ff;    /* Deep vivid neon-blue interactive highlights */
+    --accent-success: #28a745; /* Rich arcade emerald confirmation buttons */
+  }
+}
+
+/* ==========================================
+   4. ACTIVE GLOBAL STRUCTURAL ELEMENTS
+   ========================================== */
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: var(--theme-transition);
 }
