@@ -1,0 +1,64 @@
+.floatingTimerWidget {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--bg-surface);
+  border: 2px solid var(--accent-blue);
+  border-radius: 30px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  backdrop-filter: blur(6px);
+  user-select: none;
+  line-height: normal;
+  pointer-events: auto;
+  transition: var(--theme-transition);
+}
+
+.metricGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 1.2rem;
+}
+
+.digits {
+  color: var(--text-primary);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border-color);
+  margin: 0 16px;
+}
+
+.countText {
+  color: var(--text-secondary);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+@media (max-width: 480px) {
+  .floatingTimerWidget {
+    top: 10px;
+    right: 10px;
+    padding: 6px 12px;
+  }
+  .digits {
+    font-size: 1rem;
+  }
+  .countText {
+    font-size: 0.8rem;
+  }
+}
