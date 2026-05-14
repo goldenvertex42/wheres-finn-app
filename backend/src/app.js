@@ -17,7 +17,19 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const allowedOrigin = process.env.VITE_API_URL 
+  ? process.env.VITE_API_URL.replace(':3000', ':5173') // Maps frontend port if using shared vars
+  : 'http://localhost:5173';
+
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' ? process.env.PRODUCTION_FRONTEND_URL : allowedOrigin,
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true, // Enables secure cookie tracking or session timestamp tokens across ports
+  optionsSuccessStatus: 200 // Fixes legacy browser pre-flight checking handshake responses
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/game', gameRoutes);
