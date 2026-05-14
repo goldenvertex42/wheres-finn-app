@@ -13,12 +13,12 @@ The repository is split into three synchronized local workspace packages to comp
 * **Database**: Native PostgreSQL instance layer.
 
 ### Deployment Environment Mappings (`/.env`)
-Create a `.env` file at the repository root matching this exact specification system profile:
+Create a `.env` file at the repository root matching this template profile to initialize local development workflows:
 ```text
 DATABASE_URL="postgresql://username:password@localhost:5432/wheres_finn_local?schema=public"
 VITE_API_URL="http://localhost:3000"
 NODE_ENV="development"
-PRODUCTION_FRONTEND_URL="netlify.app"
+PRODUCTION_FRONTEND_URL="https://vercel.app"
 ```
 
 ## ⚡ Unified Development Execution Workflow
