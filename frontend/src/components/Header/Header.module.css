@@ -49,7 +49,7 @@
   transform: scale(0.95);
 }
 
-.link {
+.linkButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -67,13 +67,13 @@
   user-select: none;
 }
 
-.link:hover {
+.linkButton:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
 }
 
-.link:active {
+.linkButton:active {
   transform: translateY(1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -98,7 +98,7 @@
     border-radius: 10px;
   }
   
-  .link {
+  .linkButton {
     padding: 6px 14px;
     font-size: 0.8rem;
   }
