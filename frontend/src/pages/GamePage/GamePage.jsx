@@ -21,7 +21,7 @@ export default function GamePage() {
     clearTargeting
   } = useGameSession(isImageLoaded);
 
-  const isInterfaceReady = isImageLoaded && remainingCharacters.length > 0;
+  const isInterfaceReady = isImageLoaded && remainingCharacters !== undefined && remainingCharacters !== null;
 
   const handleImageClick = (e) => {
     if (!isInterfaceReady) return;
