@@ -26,6 +26,12 @@ img, picture, video, canvas, svg {
   max-width: 100%;
 }
 
+button {
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
 input, button, textarea, select {
   font: inherit;
 }
