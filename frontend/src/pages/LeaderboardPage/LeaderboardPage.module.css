@@ -1,6 +1,6 @@
 .leaderboardContainer {
   width: 100%;
-  min-height: calc(100vh - 70px); /* Adjusts height nicely to account for your 70px Header */
+  min-height: calc(100dvh - 70px);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;

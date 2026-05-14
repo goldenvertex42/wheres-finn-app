@@ -1,6 +1,6 @@
 .gameViewContainer { 
   width: 100%; 
-  min-height: 100vh; 
+  min-height: calc(100dvh - 70px); 
   box-sizing: border-box; 
   display: flex; 
   flex-direction: column; 
@@ -178,6 +178,13 @@
     --border-thickness: 3px; 
   } 
 } 
+
+@media (max-width: 600px) {
+  .gameViewContainer {
+    min-height: 100dvh; 
+    padding-bottom: 20px;
+  }
+}
 
 @media (max-width: 480px) { 
   .imageContainer { 
