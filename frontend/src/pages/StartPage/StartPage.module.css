@@ -1,70 +1,84 @@
-/* StartPage.module.css */
-
-.container {
+.startContainer {
+  width: 100%;
+  min-height: calc(100vh - 70px); /* Factors in your navigation header */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 1; /* Fills the space between Header and Footer */
-  padding: 2rem;
-  text-align: center;
-  background-color: #f0f4f8; /* Soft background to make the UI pop */
+  background-color: var(--bg-primary); /* Swaps dynamically based on OS choice */
+  transition: var(--theme-transition);
+  padding: 40px 20px;
 }
 
-.instructions {
-  background: white;
-  padding: 2rem;
+.welcomeCard {
+  background-color: var(--bg-surface); /* Swaps clean white to elevated charcoal */
+  border: 2px solid var(--border-color);
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 40px;
   max-width: 500px;
-  margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: var(--theme-transition);
+}
+
+.welcomeCard h2 {
+  margin: 0 0 16px 0;
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
 }
 
 .instructions p {
-  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-family: system-ui, sans-serif;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
-  margin-bottom: 1.5rem;
+  margin: 0 0 20px 0;
 }
 
-.instructions ul {
+.bulletList {
   text-align: left;
-  list-style: none;
-  padding: 0;
-}
-
-.instructions li {
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
-  color: #555;
+  margin: 0 0 32px 0;
+  padding-left: 20px;
+  color: var(--text-secondary);
+  font-family: system-ui, sans-serif;
+  font-size: 0.95rem;
   display: flex;
-  align-items: flex-start;
-}
-
-/* Custom bullet points */
-.instructions li::before {
-  content: "📍";
-  margin-right: 10px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .startBtn {
-  background-color: #007bff;
-  color: white;
+  width: 100%;
+  padding: 14px;
+  background-color: var(--accent-success); /* Theme variable green marker button */
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
   border: none;
-  padding: 1rem 2.5rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 50px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.2s;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.25);
+  transition: all 0.2s ease;
 }
 
-.startBtn:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
+.startBtn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(40, 167, 69, 0.35);
 }
 
-.startBtn:active {
-  transform: scale(0.98);
+.startBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.startBtn:disabled {
+  background-color: var(--text-secondary);
+  cursor: not-allowed;
+  box-shadow: none;
 }
