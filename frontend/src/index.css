@@ -51,7 +51,8 @@ h1, h2, h3, h4, h5, h6 {
    2. GLOBAL DESIGN SYSTEM TOKENS (LIGHT SYSTEM DEFAULT)
    ========================================== */
 
-:root {
+:root,
+:root[data-theme="light"] {
   --bg-primary: #f5f6fa;       /* Clean soft light theme canvas background */
   --bg-surface: #ffffff;       /* Solid crisp white element cards */
   --border-color: #dcdde1;     /* Subtle light grey separation lines */
@@ -78,6 +79,16 @@ h1, h2, h3, h4, h5, h6 {
     --accent-blue: #52a3ff;    /* Deep vivid neon-blue interactive highlights */
     --accent-success: #28a745; /* Rich arcade emerald confirmation buttons */
   }
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #1e222b;
+  --bg-surface: #2f3542;
+  --border-color: #57606f;
+  --text-primary: #ffffff;
+  --text-secondary: #a4b0be;
+  --accent-blue: #52a3ff;
+  --accent-success: #28a745;
 }
 
 /* ==========================================

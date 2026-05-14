@@ -21,7 +21,34 @@
   letter-spacing: -0.5px;
 }
 
-/* Base Link Action Button Styling */
+.brandingGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.themeToggleBtn {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 6px 12px;
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease, var(--theme-transition); 
+}
+
+.themeToggleBtn:hover {
+  filter: brightness(0.95);
+}
+
+.themeToggleBtn:active {
+  transform: scale(0.95);
+}
+
 .link {
   display: inline-flex;
   align-items: center;
@@ -40,11 +67,10 @@
   user-select: none;
 }
 
-/* Interactive States */
 .link:hover {
-  filter: brightness(1.1); 
+  filter: brightness(1.1);
   transform: translateY(-1px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25); 
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
 }
 
 .link:active {
@@ -52,20 +78,28 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Viewport Adjustments for Small Screens */
 @media (max-width: 480px) {
   .header {
-    padding: 0 20px;
+    padding: 0 16px;
     height: 60px;
   }
   
   .header h1 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .brandingGroup {
+    gap: 10px; 
+  }
+
+  .themeToggleBtn {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    border-radius: 10px;
   }
   
   .link {
     padding: 6px 14px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 }
-
